@@ -32,6 +32,19 @@ git log --oneline --decorate
 a3e5f78 Добавить локальный шаблон и правило веток
 </p>
 
-<p>
+### Сценарий ручной проверки DVT-6
+Запуск
+./gradlew run Ожидаемый вывод: Суммарно: пройдено 25 из 36 уроков, осталось 11 уроков
 
-</p>
+Тесты
+./gradlew test Ожидаемый вывод: BUILD SUCCESSFUL, все тесты зелёные
+
+Debug
+Breakpoint на while (index < mentees.length) в ProgressTracker
+Debug 'ProgressTracker.main()', Step Over (F8) x3
+Variables: index/totalCompleted/totalTotal растут как в таблице урока
+Evaluate Expression: totalCompleted + mentees[index].completedLessons() = 25 (после 2-й итерации)
+При ошибках
+Вывод неверный → проверь цикл через Debug
+Тесты красные → открой Test Report, найди AssertionError
+Breakpoint не срабатывает → убедись, что запущен Debug, не Run
