@@ -57,7 +57,7 @@ class ProgressLoopTest {
 
     @Test
     @DisplayName("Менти переданы корректные значения")
-    void shouldNotThrowException_whenMenteeHasZeroTotalLessons() {
+    void shouldNotThrowException_whenMenteeHasCorrectFields() {
         assertDoesNotThrow(() -> {
             new Mentee("Иван", "Москва", "Backend", 12, 12);
             new Mentee("Мария", "Санкт-Петербург", "Fullstack", 8, 12);
