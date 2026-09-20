@@ -4,6 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.OutputStream;
+import java.io.PrintStream;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -64,5 +67,66 @@ class ProgressLoopTest {
       new Mentee("Иван", "Москва", "Backend", 12, 12);
       new Mentee("Мария", "Санкт-Петербург", "Fullstack", 8, 12);
     });
+  }
+
+  @Test
+  @DisplayName("Пустой массив — суммарный прогресс равен нулю")
+  void shouldCalculateZeroProgressWhenMenteesArrayIsEmpty() {
+    ProgressTracker tracker = new ProgressTracker();
+    Mentee[] mentees = {};
+
+    String result = tracker.calculateTotalProgress(mentees);
+
+    assertThat(result)
+        .contains("пройдено 0 из 0 уроков")
+        .contains("осталось 0 уроков");
+  }
+
+  @Test
+  @DisplayName("Один mentee — прогресс считается корректно")
+  void shouldCalculateProgressWhenSingleMentee() {
+    ProgressTracker tracker = new ProgressTracker();
+    Mentee[] mentees = {
+        new Mentee("Иван", "Москва", "Backend", 5, 12)
+    };
+
+    String result = tracker.calculateTotalProgress(mentees);
+
+    assertThat(result)
+        .contains("пройдено 5 из 12 уроков")
+        .contains("осталось 7 уроков");
+  }
+
+  @Test
+  @DisplayName("Отрицательное количество выполненных уроков")
+  void shouldThrowExceptionWhenCompletedLessonsIsNegative() {
+    assertThrows(IllegalArgumentException.class,
+        () -> new Mentee("Иван", "Москва", "Backend", -1, 12));
+  }
+
+  @Test
+  @DisplayName("Выполнено больше, чем доступно")
+  void shouldThrowExceptionWhenCompletedMoreThanTotal() {
+    assertThrows(IllegalArgumentException.class,
+        () -> new Mentee("Иван", "Москва", "Backend", 13, 12));
+  }
+
+  @Test
+  @DisplayName("Отрицательное количество доступных уроков")
+  void shouldThrowExceptionWhenTotalLessonsIsNegative() {
+    assertThrows(IllegalArgumentException.class,
+        () -> new Mentee("Иван", "Москва", "Backend", 0, -5));
+  }
+
+  @Test
+  @DisplayName("main выполняется без исключений")
+  void shouldRunMainWithoutExceptions() {
+    PrintStream originalOut = System.out;
+    System.setOut(new PrintStream(OutputStream.nullOutputStream()));
+    try {
+      assertDoesNotThrow(() -> ProgressTracker.main(new String[0]));
+    } finally {
+      System.setOut(originalOut);
+    }
   }
 }
