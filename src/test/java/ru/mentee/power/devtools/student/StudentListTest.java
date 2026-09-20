@@ -12,8 +12,7 @@ public class StudentListTest {
 
   @Test
   @DisplayName("Добавление студента")
-  void shouldAddStudent()
-  {
+  void shouldAddStudent() {
     Student student = new Student("Илья", "Ковров");
     StudentList students = new StudentList();
     students.addStudent(student);
@@ -24,8 +23,7 @@ public class StudentListTest {
 
   @Test
   @DisplayName("Добавление студента")
-  void shouldNotAddNullStudent()
-  {
+  void shouldNotAddNullStudent() {
     StudentList students = new StudentList();
     students.addStudent(null);
 
@@ -35,8 +33,7 @@ public class StudentListTest {
 
   @Test
   @DisplayName("Получение студента по городу")
-  void shouldGetStudentsByCity()
-  {
+  void shouldGetStudentsByCity() {
     StudentList students = new StudentList();
     students.addStudent(new Student("Илья", "Москва"));
     students.addStudent(new Student("Марина", "Санкт-Петербург"));
@@ -47,8 +44,7 @@ public class StudentListTest {
 
   @Test
   @DisplayName("Получение студента по городу")
-  void shouldGetEmptyStudentList()
-  {
+  void shouldGetEmptyStudentList() {
     StudentList students = new StudentList();
     students.addStudent(new Student("Илья", "Москва"));
     students.addStudent(new Student("Марина", "Санкт-Петербург"));
