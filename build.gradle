@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'checkstyle'
 }
 
 group = 'ru.mentee.power'
@@ -30,6 +31,17 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter"
     testImplementation "org.assertj:assertj-core:${assertjVersion}"
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+checkstyle {
+    toolVersion = '14.1.0'
+    maxErrors = 0      // даже 1 ошибка (severity=error) → BUILD FAILED
+    maxWarnings = 999  // предупреждения (severity=warning) не блокируют сборку
+    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+}
+
+tasks.withType(Checkstyle).configureEach {
+    group = 'verification'
 }
 
 test {
