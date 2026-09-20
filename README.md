@@ -48,3 +48,50 @@ Evaluate Expression: totalCompleted + mentees[index].completedLessons() = 25 (п
 Вывод неверный → проверь цикл через Debug
 Тесты красные → открой Test Report, найди AssertionError
 Breakpoint не срабатывает → убедись, что запущен Debug, не Run
+
+## Кодстайл-гайд
+
+Проект следует правилам Google Java Style Guide с адаптацией.
+Автоматическая проверка: ./gradlew checkstyleMain
+
+### 1. Именование методов: camelCase
+До:    public void add_student(Student s) { }
+После: public void addStudent(Student student) { }
+Почему: Java Convention требует camelCase для методов.
+Источник: https://google.github.io/styleguide/javaguide.html#s5.3-camel-case
+
+### 2. Пробелы после if/for/while
+До:    if(condition) {
+После: if (condition) {
+Почему: улучшает читаемость, отделяет ключевое слово от выражения.
+Источник: Oracle Code Conventions — Whitespace
+
+### 3. Длина строки: максимум 100 символов
+До:    public List getStudentsFromSpecificCityWithVeryLongName...
+После: public List getStudentsByCity(String city) {
+Почему: длинные строки затрудняют чтение в редакторе и при code review.
+Источник: https://google.github.io/styleguide/javaguide.html#s4.4-column-limit
+
+### 4. Порядок импортов
+До:    import java.util.List; import java.util.ArrayList; import java.io.File;
+После: import java.io.File; import java.util.ArrayList; import java.util.List;
+Почему: алфавитный порядок упрощает поиск импортов.
+Источник: `config/checkstyle/checkstyle.xml` (`CustomImportOrder`) и проектная схема `.idea/codeStyles/Project.xml`
+
+### 5. Фигурные скобки для if
+До:    if (condition) doSomething();
+После: if (condition) { doSomething(); }
+Почему: скобки обязательны даже для однострочных блоков.
+Источник: https://google.github.io/styleguide/javaguide.html#s4.1.1-braces-always-used
+
+### 6. Использование двух пробелов вместо табуляции
+До:      (TAB) public List getStudentsByCity(String city) {
+После:   (2 spaces) public List getStudentsByCity(String city) {
+Почему: каждый раз когда открывается новый блок отступ увеличивается на два пробела
+Источник: https://google.github.io/styleguide/javaguide.html#s4.2-block-indentation
+
+### 7. Импорт без wildcards
+До:      import java.util.*;
+После:   import java.util.List;
+Почему: делают код менее предсказуемым, могут незаметно менять поведение при обновлении библиотек, замедляют чтение и ломают инструменты
+Источник: https://google.github.io/styleguide/javaguide.html#s3.3.1-wildcard-imports

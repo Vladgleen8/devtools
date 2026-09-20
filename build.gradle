@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'checkstyle'
+    id 'jacoco'
 }
 
 group = 'ru.mentee.power'
@@ -38,6 +39,40 @@ checkstyle {
     maxErrors = 0      // даже 1 ошибка (severity=error) → BUILD FAILED
     maxWarnings = 999  // предупреждения (severity=warning) не блокируют сборку
     configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+}
+
+jacoco {
+    toolVersion = '0.8.15'
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport  // генерировать отчёт после тестов
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = false
+        csv.required = false
+        html.required = true
+        html.outputLocation = layout.buildDirectory.dir('reports/jacoco/test/html')
+    }
+}
+
+jacocoTestCoverageVerification {
+    dependsOn jacocoTestReport
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.80  // 80% покрытия инструкций
+            }
+        }
+    }
+}
+
+check {
+    dependsOn jacocoTestCoverageVerification
 }
 
 tasks.withType(Checkstyle).configureEach {
