@@ -95,3 +95,6 @@ Breakpoint не срабатывает → убедись, что запущен
 После:   import java.util.List;
 Почему: делают код менее предсказуемым, могут незаметно менять поведение при обновлении библиотек, замедляют чтение и ломают инструменты
 Источник: https://google.github.io/styleguide/javaguide.html#s3.3.1-wildcard-imports
+
+### badge
+[![Java CI](https://github.com/Vladgleen8/devtools/actions/workflows/ci.yml/badge.svg?branch=feature%2FDVT-8-ci)](https://github.com/Vladgleen8/devtools/actions/workflows/ci.yml)
