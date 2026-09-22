@@ -1,7 +1,6 @@
 package ru.mentee.power.devtools.progress;
 
 public class ProgressTracker {
-
   public String calculateTotalProgress(Mentee[] mentees) {
     int completedLessons = 0;
     int totalLessons = 0;
