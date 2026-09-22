@@ -2,6 +2,7 @@ package ru.mentee.power.devtools.student;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -24,13 +25,10 @@ public class StudentListTest {
   }
 
   @Test
-  @DisplayName("Добавление студента")
+  @DisplayName("Студент не должен был добавиться")
   void shouldNotAddNullStudent() {
     StudentList students = new StudentList();
-    students.addStudent(null);
-
-    List<Student> studentFromCity = students.getStudentsByCity("Ковров");
-    assertEquals(0, studentFromCity.size());
+    assertThrows(IllegalArgumentException.class, () -> students.addStudent(null));
   }
 
   @Test

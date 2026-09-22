@@ -1,22 +1,20 @@
 package ru.mentee.power.devtools.progress;
 
 public class ProgressTracker {
-  /**
-   * Суммарный прогресс группы mentee.
-   */
+
   public String calculateTotalProgress(Mentee[] mentees) {
-    int totalCompleted = 0;
-    int totalTotal = 0;
+    int completedLessons = 0;
+    int totalLessons = 0;
     int index = 0;
 
     while (index < mentees.length) {
-      totalCompleted += mentees[index].completedLessons();
-      totalTotal += mentees[index].totalLessons();
+      completedLessons += mentees[index].completedLessons();
+      totalLessons += mentees[index].totalLessons();
       index++;
     }
 
-    return "Суммарно: пройдено %d из %d уроков, осталось %d уроков".formatted(totalCompleted,
-        totalTotal, totalTotal - totalCompleted);
+    return "Суммарно: пройдено %d из %d уроков, осталось %d уроков".formatted(completedLessons,
+        totalLessons, totalLessons - completedLessons);
   }
 
   public static void main(String[] args) {
