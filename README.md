@@ -153,8 +153,9 @@ totalCompleted → completedLessons
 
 ## Результаты само-ревью DVT-9
 1. Удалил избыточный комментарий в ProgressTracker
-2. Добавил обработку null в методе addStudent класса StudentList
+2. Добавил обработку null в методе addStudent класса StudentList теперь выкиыдвается exception
 3. Удалил отладочный вывод в консоль в ProgressDemo
 4. Удалил дублирующуся переменную в ProgressDemo
 5. Скорректировал названия переменных в ProgressTracker заменив totalCompleted -> completedLessons, totalTotal -> totalLessons
 6. Скорректировал дублирующееся имя у @DisplayName в тестах
+7. Скорректировал тест на проверку метода addStudent так как теперь выкидывается Exception
