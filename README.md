@@ -157,3 +157,4 @@ totalCompleted → completedLessons
 3. Удалил отладочный вывод в консоль в ProgressDemo
 4. Удалил дублирующуся переменную в ProgressDemo
 5. Скорректировал названия переменных в ProgressTracker заменив totalCompleted -> completedLessons, totalTotal -> totalLessons
+6. Скорректировал дублирующееся имя у @DisplayName в тестах
