@@ -24,7 +24,7 @@ public class StudentListTest {
   }
 
   @Test
-  @DisplayName("Добавление студента")
+  @DisplayName("Студент не должен был добавиться")
   void shouldNotAddNullStudent() {
     StudentList students = new StudentList();
     students.addStudent(null);
