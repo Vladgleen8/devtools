@@ -13,8 +13,6 @@ public class StudentList {
   public void addStudent(Student student) {
     if (student != null) {
       students.add(student);
-    } else {
-      throw new IllegalArgumentException("Некорректное значение Student");
     }
   }
 
