@@ -14,7 +14,7 @@ public class StudentList {
     if (student != null) {
       students.add(student);
     } else {
-      System.out.println("Некорректное значение студента");
+      throw new IllegalArgumentException("Некорректное значение Student");
     }
   }
 
