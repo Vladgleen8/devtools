@@ -16,6 +16,26 @@ public class ProgressTracker {
         totalLessons, totalLessons - completedLessons);
   }
 
+  /**
+   * Средний процент прохождения по всем mentee.
+   *
+   * @throws IllegalArgumentException если массив пуст
+   */
+  public double averageProgressPercent(Mentee[] mentees) {
+    if (mentees.length == 0) {
+      throw new IllegalArgumentException("Пустой список mentee");
+    }
+    int index = 0;
+    double averagePercent = 0;
+    while (index < mentees.length) {
+      Mentee mentee = mentees[index];
+      double menteeProgress = mentee.completedLessons() * 100.0 / mentee.totalLessons();
+      averagePercent += menteeProgress;
+      index++;
+    }
+    return averagePercent / index;
+  }
+
   public static void main(String[] args) {
     Mentee[] mentees = {
         new Mentee("Иван", "Москва", "Backend разработка", 5, 12),

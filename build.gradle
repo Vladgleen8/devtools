@@ -41,6 +41,10 @@ checkstyle {
     configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
 }
 
+tasks.named('checkstyleTest') {
+    exclude '**/*Test.java'
+}
+
 jacoco {
     toolVersion = '0.8.15'
 }

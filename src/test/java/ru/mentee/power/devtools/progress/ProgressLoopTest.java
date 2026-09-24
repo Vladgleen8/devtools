@@ -1,6 +1,8 @@
 package ru.mentee.power.devtools.progress;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.data.Offset.offset;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -15,7 +17,7 @@ class ProgressLoopTest {
 
   @Test
   @DisplayName("Суммарный прогресс для нескольких mentee с разным прогрессом")
-  void shouldCalculateTotalProgressWhenMultipleMentees() {
+  void shouldCalculateTotalProgress_WhenMultipleMentees() {
     ProgressTracker tracker = new ProgressTracker();
     Mentee[] mentees = {
         new Mentee("Иван", "Москва", "Backend разработка", 5, 12),
@@ -28,6 +30,8 @@ class ProgressLoopTest {
     assertThat(result)
         .contains("пройдено 25 из 36 уроков")
         .contains("осталось 11 уроков");
+    assertThat(mentees).extracting(Mentee::name).containsExactly("Иван", "Мария", "Пётр");
+
   }
 
   @Test
@@ -128,5 +132,54 @@ class ProgressLoopTest {
     } finally {
       System.setOut(originalOut);
     }
+  }
+
+  @Test
+  void shouldCalculateProgress() {
+    Mentee[] mentees = {
+        new Mentee("Иван", "Москва", "Backend разработка", 6, 12),
+        new Mentee("Мария", "Санкт-Петербург", "Fullstack", 6, 12)
+    };
+    ProgressTracker tracker = new ProgressTracker();
+    double actualProgress = tracker.averageProgressPercent(mentees);
+    double expectedProgress = 50.0;
+    assertThat(actualProgress)
+        .isEqualTo(expectedProgress);
+  }
+
+  @Test
+  @DisplayName("Средний процент для некруглых значений")
+  void shouldCalculateAverageProgressPercent_whenValuesAreNotRound() {
+    ProgressTracker tracker = new ProgressTracker();
+    Mentee[] mentees = {
+        new Mentee("Иван", "Москва", "Backend", 5, 12),
+        new Mentee("Мария", "СПб", "Fullstack", 8, 12),
+        new Mentee("Пётр", "Казань", "Java Backend", 12, 12)
+    };
+    double result = tracker.averageProgressPercent(mentees);
+    assertThat(result).isCloseTo(69.444, offset(0.01));
+  }
+
+  @Test
+  @DisplayName("Ислюкчение при пустом массиве")
+  void shouldThrowException_WhenMenteesEmptyArray() {
+    ProgressTracker tracker = new ProgressTracker();
+    Mentee[] mentees = {};
+    assertThatThrownBy(() -> tracker.averageProgressPercent(mentees)).isInstanceOf(IllegalArgumentException.class).hasMessage("Пустой список mentee");
+  }
+
+  @Test
+  @DisplayName("Средний процент в границах (40, 50) при неполном прохождении")
+  void shouldReturnAverageProgressPercentWithinBounds_whenAtLeastOneMenteeNotCompleted() {
+    ProgressTracker tracker = new ProgressTracker();
+    Mentee[] mentees = {
+        new Mentee("Иван", "Москва", "Backend", 5, 12)
+    };
+
+    double result = tracker.averageProgressPercent(mentees);
+
+    assertThat(result)
+        .isGreaterThan(40)
+        .isLessThanOrEqualTo(50);
   }
 }
