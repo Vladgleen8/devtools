@@ -1,6 +1,7 @@
 package ru.mentee.power.devtools.progress;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.data.Offset.offset;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -71,6 +72,8 @@ class ProgressLoopTest {
       new Mentee("Иван", "Москва", "Backend", 12, 12);
       new Mentee("Мария", "Санкт-Петербург", "Fullstack", 8, 12);
     });
+    assertThatCode(() -> new Mentee("Иван", "Москва", "Backend", 12, 12))
+        .doesNotThrowAnyExceptionExcept();
   }
 
   @Test
